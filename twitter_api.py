@@ -22,5 +22,5 @@ def get_access_token(auth, verifier):
         auth.get_access_token(verifier)
         return auth.access_token, auth.access_token_secret
     except tweepy.TweepError as e:
-        print(f"Error! Failed to get access token: {e}")  # Debug print statement
+        print(f"Error! Failed to get access token: {e}")
         return None, None
