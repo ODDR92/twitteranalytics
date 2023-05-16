@@ -20,7 +20,7 @@ def authorize():
     if redirect_url:
         return redirect(redirect_url)
     else:
-        return 'Error! Failed to get request token.'
+        return 'Auth Error! Failed to get request token.'
 
 @app.route('/callback')
 def callback():
@@ -32,7 +32,7 @@ def callback():
         # Save these tokens for later use
         return 'Successfully authorized!'
     else:
-        return 'Error! Failed to get access token.'
+        return 'Callback Error! Failed to get access token.'
 
 @app.route('/fetch_tweets')
 def fetch_tweets():
