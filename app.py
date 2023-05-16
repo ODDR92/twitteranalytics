@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Welcome to Twitter Analytics!'
+    return render_template('home.html')
 
 @app.route('/authorize')
 def authorize():
@@ -27,6 +27,3 @@ def callback():
         return 'Successfully authorized!'
     else:
         return
-@app.route('/')
-def home():
-    return render_template('home.html')
