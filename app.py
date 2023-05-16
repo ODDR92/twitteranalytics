@@ -15,6 +15,7 @@ def home():
 @app.route('/authorize')
 def authorize():
     auth = get_auth()
+    print(f"Auth object: {auth}")  # Debug print statement
     redirect_url = get_redirect_url(auth)
     if redirect_url:
         return redirect(redirect_url)
@@ -24,6 +25,7 @@ def authorize():
 @app.route('/callback')
 def callback():
     verifier = request.args.get('oauth_verifier')
+    print(f"Verifier: {verifier}")  # Debug print statement
     auth = get_auth()
     access_token, access_token_secret = get_access_token(auth, verifier)
     if access_token and access_token_secret:
