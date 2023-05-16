@@ -1,5 +1,5 @@
 # app.py
-from flask import Flask, redirect, request
+from flask import Flask, redirect, request, render_template
 from twitter_api import get_auth, get_redirect_url, get_access_token
 
 app = Flask(__name__)
@@ -27,3 +27,6 @@ def callback():
         return 'Successfully authorized!'
     else:
         return
+@app.route('/')
+def home():
+    return render_template('home.html')
