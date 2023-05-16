@@ -1,6 +1,6 @@
+# app.py
 from flask import Flask, redirect, request
-import tweepy
-import os
+from twitter_api import get_auth, get_redirect_url, get_access_token
 
 app = Flask(__name__)
 
@@ -10,20 +10,20 @@ def home():
 
 @app.route('/authorize')
 def authorize():
-    auth = tweepy.OAuthHandler(os.getenv('CONSUMER_KEY'), os.getenv('CONSUMER_SECRET'))
-    try:
-        redirect_url = auth.get_authorization_url()
+    auth = get_auth()
+    redirect_url = get_redirect_url(auth)
+    if redirect_url:
         return redirect(redirect_url)
-    except tweepy.TweepError:
+    else:
         return 'Error! Failed to get request token.'
 
 @app.route('/callback')
 def callback():
     verifier = request.args.get('oauth_verifier')
-    auth = tweepy.OAuthHandler(os.getenv('CONSUMER_KEY'), os.getenv('CONSUMER_SECRET'))
-    auth.get_access_token(verifier)
-    # Save these tokens for later use
-    return 'Successfully authorized!'
-
-if __name__ == '__main__':
-    app.run()
+    auth = get_auth()
+    access_token, access_token_secret = get_access_token(auth, verifier)
+    if access_token and access_token_secret:
+        # Save these tokens for later use
+        return 'Successfully authorized!'
+    else:
+        return
